@@ -23,7 +23,7 @@ const Register = () => {
         if (authStatus) navigate('/dashboard');
     }, [authStatus, navigate]);
 
-    // This function automatically updates the state whenever you type in any input box
+    // This function automatically updates the state whenever the user types in any input box
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
