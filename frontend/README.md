@@ -1,16 +1,21 @@
-# React + Vite
+# EventExpert - Frontend Client
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+The client-side user interface for EventExpert, built with React (Vite) and standard CSS Modules for clean, scoped styling.
 
-Currently, two official plugins are available:
+## 🧠 State Management & Hooks
+This application relies on **Redux Toolkit** to manage global user state. The authentication flow heavily utilizes modern React hooks:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+* **`useSelector`**: To extract user data from the global Redux store for the UI.
+* **`useDispatch`**: To send API responses directly into the global state.
+* **`useNavigate`**: For client-side routing based on authentication status.
+* **`useEffect`**: To intercept rendering and redirect users based on active sessions.
 
-## React Compiler
+## 💻 Local Setup
+Follow these steps to run the frontend client locally:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. Navigate to the frontend directory: `cd frontend`
+2. Install the necessary dependencies: `npm install`
+3. Start the Vite development server: `npm run dev`
+4. Open `http://localhost:5173` in your browser.
 
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+> **Note:** Ensure the backend API is running concurrently on port 8000 for full functionality.
