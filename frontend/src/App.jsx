@@ -9,6 +9,7 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<Navigate to="/register" replace />} />
         <Route path="/register" element={<Register />} />
         
         {/* The Dashboard Route */}

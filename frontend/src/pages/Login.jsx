@@ -20,15 +20,17 @@ const Login = () => {
         try {
             const response = await axios.post('http://localhost:8000/api/v1/users/login', formData);
             
-            if (response.data.success) {
-                // Dispatch the user data and token to Redux
-                dispatch(login({
-                    userData: response.data.data.user,
-                    token: response.data.data.token
-                }));
-                // Route to the dashboard
-                navigate('/dashboard');
-            }
+            // Extract the user data directly from your backend's ApiResponse structure
+            const userData = response.data.data.user;
+
+            // Dispatch just the user data to Redux (matching what your authSlice expects)
+            dispatch(login({
+                userData: userData
+            }));
+
+            // Route straight to the dashboard
+            navigate('/dashboard');
+
         } catch (err) {
             setError(err.response?.data?.message || 'Login failed. Please try again.');
         }

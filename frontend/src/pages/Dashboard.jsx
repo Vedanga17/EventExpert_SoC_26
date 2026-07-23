@@ -8,6 +8,7 @@ const Dashboard = () => {
     const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [filter, setFilter] = useState('all');
     const dispatch = useDispatch();
     const navigate = useNavigate();
     
@@ -30,9 +31,16 @@ const Dashboard = () => {
     const currentUser = useSelector((state) => state.auth.userData);
     
 
-    const fetchEvents = async () => {
+    const fetchEvents = async (currentFilter = filter) => {
         try {
-            const response = await axios.get('http://localhost:8000/api/v1/events/all');
+            setLoading(true); // Show loading text while switching
+            
+            // Choose the correct backend route based on the filter
+            const endpoint = currentFilter === 'all' 
+                ? 'http://localhost:8000/api/v1/events/all' 
+                : 'http://localhost:8000/api/v1/events/my-events';
+
+            const response = await axios.get(endpoint);
             setEvents(response.data.data); 
             setLoading(false);
         } catch (err) {
@@ -41,9 +49,10 @@ const Dashboard = () => {
         }
     };
 
+    // When the filter state changes, automatically fetch the new data
     useEffect(() => {
-        fetchEvents();
-    }, []);
+        fetchEvents(filter);
+    }, [filter]);
 
     // 3. The RSVP Function
     const handleRSVP = async (eventId) => {
@@ -75,6 +84,21 @@ const Dashboard = () => {
         <div style={{ maxWidth: '800px', margin: '50px auto', padding: '2rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <h2>Event Dashboard</h2>
+                <div style={{ display: 'flex', gap: '0.5rem', backgroundColor: '#f1f1f1', padding: '0.3rem', borderRadius: '4px' }}>
+                    <button 
+                        onClick={() => setFilter('all')}
+                        style={{ padding: '0.4rem 1rem', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold', backgroundColor: filter === 'all' ? '#fff' : 'transparent', boxShadow: filter === 'all' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none' }}
+                    >
+                        All Events
+                    </button>
+                    <button 
+                        onClick={() => setFilter('mine')}
+                        style={{ padding: '0.4rem 1rem', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold', backgroundColor: filter === 'mine' ? '#fff' : 'transparent', boxShadow: filter === 'mine' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none' }}
+                    >
+                        My Events
+                    </button>
+                </div>
+                <div style={{ display: 'flex', gap: '1rem' }}></div>
                 <button 
                     onClick={() => navigate('/create-event')}
                     style={{ padding: '0.5rem 1rem', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}

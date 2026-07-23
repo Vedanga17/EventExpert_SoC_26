@@ -126,10 +126,23 @@ const updateEvent = asyncHandler(async (req, res) => {
     );
 });
 
+// --- GET MY EVENTS CONTROLLER ---
+const getMyEvents = asyncHandler(async (req, res) => {
+    // Find events where the creator matches the logged-in user
+    const events = await Event.find({ createdBy: req.user._id })
+        .populate("createdBy", "fullName email") 
+        .sort({ createdAt: -1 });
+
+    return res.status(200).json(
+        new ApiResponse(200, events, "Your events fetched successfully")
+    );
+});
+
 export {
     createEvent,
     getAllEvents, 
     rsvpEvent,
     updateEvent,
-    deleteEvent
+    deleteEvent, 
+    getMyEvents
 };
