@@ -1,22 +1,51 @@
-# EventExpert - Backend API
+# EventExpert Backend
 
-The server-side infrastructure for EventExpert, built with Node.js, Express, and MongoDB.
+This folder contains the Express + MongoDB API for EventExpert. It handles authentication, event management, and RSVP actions for the frontend.
 
-## 🏗️ Architecture
-This API is built using a highly modular, scalable structure:
-- **`controllers/`**: Contains the core business logic (e.g., user registration, authentication).
-- **`models/`**: Mongoose schemas defining the MongoDB database structure.
-- **`routes/`**: API endpoint definitions routing requests to the appropriate controllers.
-- **`utils/`**: Reusable helper classes, including standardized `ApiError`, `ApiResponse`, and a custom `asyncHandler` to eliminate redundant `try...catch` blocks.
+## ✅ Backend capabilities
+- Register a new user
+- Log in and log out securely
+- Create, update, delete, and list events
+- Fetch “all events” and “my events” separately
+- Toggle RSVP attendance for an event
+- Protect routes with JWT authentication middleware
 
-## 🚦 RESTful Standards
-All endpoints follow strict RESTful design principles and return standardized JSON responses, utilizing appropriate HTTP status codes (201 Created, 400 Bad Request, 409 Conflict, etc.).
+## 🧱 Project structure
+- src/app.js: Express app setup and route mounting
+- src/controllers/: user and event business logic
+- src/routes/: API endpoints for users and events
+- src/models/: Mongoose schemas for users and events
+- src/middlewares/: JWT authentication middleware
+- src/utils/: reusable response and error helpers
 
-## 💻 Local Setup
-1. Navigate to the backend directory: `cd backend`
-2. Install dependencies: `npm install`
-3. Create a `.env` file in the root of the `/backend` directory and add the following variables:
-   ```env
-   PORT=8000
-   CORS_ORIGIN=http://localhost:5173
-   MONGO_URI=your_mongodb_atlas_connection_string
+## 🔗 API overview
+- POST /api/v1/users/register — register a user
+- POST /api/v1/users/login — log in a user
+- POST /api/v1/users/logout — clear the auth cookie
+- POST /api/v1/events/create — create an event
+- GET /api/v1/events/all — list all events
+- GET /api/v1/events/my-events — list the current user’s events
+- POST /api/v1/events/:eventId/rsvp — toggle RSVP status
+- PATCH /api/v1/events/:eventId — update an event
+- DELETE /api/v1/events/:eventId — delete an event
+
+## ⚙️ Environment variables
+Create a `.env` file inside the backend folder with:
+
+```env
+PORT=8000
+NODE_ENV=development
+MONGO_URI=your_mongodb_connection_string
+ACCESS_TOKEN=your_secret_key
+ACCESS_TOKEN_EXPIRY=1d
+CORS_ORIGIN=http://localhost:5173
+```
+
+## ▶️ Run locally
+```bash
+cd backend
+npm install
+npm run dev
+```
+
+The API will run on http://localhost:8000 by default.

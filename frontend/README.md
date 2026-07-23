@@ -1,21 +1,40 @@
-# EventExpert - Frontend Client
+# EventExpert Frontend
 
-The client-side user interface for EventExpert, built with React (Vite) and standard CSS Modules for clean, scoped styling.
+This folder contains the React/Vite client for EventExpert. It provides the pages for registration, login, event browsing, event creation, editing, and RSVPs.
 
-## 🧠 State Management & Hooks
-This application relies on **Redux Toolkit** to manage global user state. The authentication flow heavily utilizes modern React hooks:
+## ✅ Current frontend features
+- Register and login pages
+- Protected dashboard experience
+- Event feed with All Events and My Events filters
+- Create Event page
+- Edit Event page
+- RSVP and cancel RSVP actions
+- Logout flow that clears local auth state
 
-* **`useSelector`**: To extract user data from the global Redux store for the UI.
-* **`useDispatch`**: To send API responses directly into the global state.
-* **`useNavigate`**: For client-side routing based on authentication status.
-* **`useEffect`**: To intercept rendering and redirect users based on active sessions.
+## 🧩 Main pages
+- /register — user registration
+- /login — user login
+- /dashboard — event dashboard
+- /create-event — create a new event
+- /edit-event/:id — edit an existing event
 
-## 💻 Local Setup
-Follow these steps to run the frontend client locally:
+## 🧠 State management
+The app uses Redux Toolkit to store authentication state. User info is persisted in local storage so login status survives refreshes.
 
-1. Navigate to the frontend directory: `cd frontend`
-2. Install the necessary dependencies: `npm install`
-3. Start the Vite development server: `npm run dev`
-4. Open `http://localhost:5173` in your browser.
+## ▶️ Run locally
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-> **Note:** Ensure the backend API is running concurrently on port 8000 for full functionality.
+Open http://localhost:5173 in your browser.
+
+> Make sure the backend is running on http://localhost:8000 so the frontend can communicate with the API.
+
+## 🧪 Useful commands
+```bash
+npm run build
+npm run lint
+npm run preview
+```
