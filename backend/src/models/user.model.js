@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import bcrypt from "bcrypt";
 
 const userSchema = new Schema(
     {
@@ -29,5 +30,16 @@ const userSchema = new Schema(
         timestamps: true // Automatically adds createdAt and updatedAt fields
     }
 );
+
+// hash the password JUST BEFORE saving the user (this is a pre-hook)
+
+userSchema.pre("save", async function (next) {
+    // If the password hasn't been modified (e.g. just updating a username), skip hashing
+    if (!this.isModified("password")) return next();
+
+    // Hash the password
+    this.password = await bcrypt.hash(this.password, 12);
+    next();
+});
 
 export const User = mongoose.model("User", userSchema);
