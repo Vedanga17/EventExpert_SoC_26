@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { registerUser } from "../controllers/user.controller.js";
-import { loginUser } from "../controllers/user.controller.js";
+import { loginUser, logoutUser, registerUser } from "../controllers/user.controller.js";
+import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
@@ -9,5 +9,8 @@ router.route("/register").post(registerUser);
 
 // POST route: /api/v1/users/login
 router.route("/login").post(loginUser);
+
+// POST route: /api/v1/users/logout
+router.route("/logout").post(verifyJWT, logoutUser);
 
 export default router;  

@@ -89,7 +89,21 @@ export const loginUser = asyncHandler(async (req, res) => {
         );
 });
 
+export const logoutUser = asyncHandler(async (req, res) => {
+    const cookieOptions = {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production"
+    };
+
+    // to logout the user, remove their access token (this is done by clearing the cookie)
+    return res
+        .status(200)
+        .clearCookie("accessToken", cookieOptions)
+        .json(new ApiResponse(200, {}, "User logged out successfully")); // nothing to return, hence {} used
+});
+
 export { 
     registerUser,
-    loginUser
+    loginUser,
+    logoutUser
  };
