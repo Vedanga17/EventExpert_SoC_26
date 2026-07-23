@@ -29,18 +29,25 @@ const Register = () => {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await axios.post('http://localhost:8000/api/v1/users/register', formData);
-            if (response.data.success) {
-                dispatch(login({ userData: response.data.data }));
-                navigate('/dashboard'); 
-            }
-        } catch (error) {
-            console.error("Registration failed:", error.response?.data?.message);
-            alert(error.response?.data?.message || "Registration failed");
+    e.preventDefault();
+    setError('');
+    try {
+        const response = await axios.post('http://localhost:8000/api/v1/users/register', formData);
+        
+        if (response.data.success) {
+            // Dispatch the user data and token to Redux immediately
+            dispatch(login({
+                userData: response.data.data.user,
+                token: response.data.data.token
+            }));
+            
+            // Route straight to the dashboard or event creation
+            navigate('/dashboard'); 
         }
-    };
+    } catch (err) {
+        setError(err.response?.data?.message || 'Registration failed. Please try again.');
+    }
+};
 
     return (
         <form onSubmit={handleSubmit} className={styles.formContainer}>

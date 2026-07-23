@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard'; 
 import Login from './pages/Login';
+import CreateEvent from './pages/CreateEvent';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         {/* The Dashboard Route */}
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/create-event" element={<CreateEvent />} />
       </Routes>
     </Router>
   );

@@ -3,6 +3,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js"; 
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const registerUser = asyncHandler(async (req, res) => {
     // we need these 4 fields to register the user.
@@ -28,13 +29,30 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new ApiError(500, "Something went wrong while registering the user");
     }
 
+    // create an access token as well so that when a user register, they can stay logged in as well
+    const token = jwt.sign(
+        { 
+            _id: createdUser._id, 
+            email: createdUser.email, 
+            role: createdUser.role 
+        },
+        process.env.ACCESS_TOKEN,
+        { expiresIn: process.env.ACCESS_TOKEN_EXPIRY }
+    );
+
     // if everything is done, return a success message
-    return res.status(201).json(
-        new ApiResponse(201, createdUser, "User registered successfully")
+    return res
+        .status(201)
+        .cookie("accessToken", token, options) // return the access token as well
+        .json(
+        new ApiResponse(
+            201, 
+            { user: createdUser, token },
+            "User registered successfully")
     );
 });
 
-export const loginUser = asyncHandler(async (req, res) => {
+const loginUser = asyncHandler(async (req, res) => {
     // we need the email and password fields to login the user
     const { email, password } = req.body;
 
@@ -89,7 +107,7 @@ export const loginUser = asyncHandler(async (req, res) => {
         );
 });
 
-export const logoutUser = asyncHandler(async (req, res) => {
+const logoutUser = asyncHandler(async (req, res) => {
     const cookieOptions = {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production"

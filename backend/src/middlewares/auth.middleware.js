@@ -9,7 +9,7 @@ const verifyJWT = asyncHandler(async (req, res, next) => {
         const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "");
 
         // if no token was found, we cannot provide them access. throw an error.
-        if (!token) {
+        if (!token || token === "undefined" || token === "null") {
             throw new ApiError(401, "Unauthorized request. Please log in.");
         }
 

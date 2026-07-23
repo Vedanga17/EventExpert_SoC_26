@@ -18,7 +18,7 @@ const Login = () => {
         e.preventDefault();
         setError('');
         try {
-            const response = await axios.post('http://localhost:8000/api/users/login', formData);
+            const response = await axios.post('http://localhost:8000/api/v1/users/login', formData);
             
             if (response.data.success) {
                 // Dispatch the user data and token to Redux
