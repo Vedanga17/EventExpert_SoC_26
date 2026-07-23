@@ -80,7 +80,19 @@ const Register = () => {
             <button type="submit" className={styles.submitButton}>
                 Register User
             </button>
+            <div style={{ marginTop: '1.5rem', textAlign: 'center', fontSize: '0.9rem' }}>
+                <p style={{ color: '#555' }}>
+                    Already have an account?{' '}
+                    <span 
+                        onClick={() => navigate('/login')} 
+                        style={{ color: '#007bff', cursor: 'pointer', fontWeight: 'bold', textDecoration: 'underline' }}
+                    >
+                        Log in here
+                    </span>
+                </p>
+            </div>
         </form>
+        
     );
 };
 

@@ -33,15 +33,15 @@ const CreateEvent = () => {
                 formData,
                 {
                     headers: {
-                        Authorization: `Bearer ${token}` // Injecting the JWT!
+                        Authorization: `Bearer ${token}` // Injecting the token
                     },
-                    withCredentials: true // Important if you are also using cookies
+                    withCredentials: true // this is required if we use cookies; good to have in code
                 }
             );
 
             if (response.status === 201) {
                 setSuccess('Event created successfully!');
-                setTimeout(() => navigate('/dashboard'), 2000); // Route back to dashboard after 2 seconds
+                setTimeout(() => navigate('/dashboard'), 2000); // Route back to dashboard after 2000 milliseconds
             }
         } catch (err) {
             setError(err.response?.data?.message || 'Failed to create event.');

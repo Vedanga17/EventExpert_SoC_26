@@ -36,6 +36,7 @@ const eventSchema = new Schema(
                 ref: "User",
             }
         ],
+        
         // Suppose a user wants to delete or update an event. need this to ensure that only the person who created this event
         // can do that. 
         createdBy: {

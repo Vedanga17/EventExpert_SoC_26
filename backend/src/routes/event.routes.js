@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createEvent } from "../controllers/event.controller.js";
+import { createEvent, rsvpEvent, getAllEvents, deleteEvent, updateEvent } from "../controllers/event.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 const router = Router();
@@ -8,5 +8,9 @@ const router = Router();
 router.use(verifyJWT); 
 
 router.route("/create").post(createEvent);
+router.route("/all").get(getAllEvents);
+router.route("/:eventId/rsvp").post(rsvpEvent);
+router.route("/:eventId").delete(deleteEvent);
+router.route("/:eventId").patch(updateEvent);
 
 export default router;

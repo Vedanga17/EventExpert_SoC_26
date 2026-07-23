@@ -8,6 +8,9 @@ import axios from 'axios'
 import { Provider } from 'react-redux'
 import store from './store/store.js'
 
+// this is a global setting; this ensures that the cookies which come from a different port are ALLOWED to enter, and not be
+// discarded. our frontend is running on 5173, but uses cookies coming from the backend at port 8000. if not for this setting, 
+// the cookies coming from the backend would be trashed away, causing multiple errors.
 axios.defaults.withCredentials = true;
 
 ReactDOM.createRoot(document.getElementById('root')).render(
